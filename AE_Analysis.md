@@ -446,9 +446,7 @@ also gives you a visual understanding of the distribution of data in
 each column, including the range of most values (the box) and potential
 outliers (the points outside the box).
 
-From the result of this analysis, it can be observed that there are no
-outliers in the columns experiment on for outliers. This entails that we
-can carry on with the analysis.
+The IQR test flags outliers in every column except IMD decile: 23,255 in time spent in A&E, 5,975 in number of diagnoses, 47,446 in investigations, 28,471 in treatments and 62,852 in provider to patient distance. In a dataset of this kind most of these are genuine long-tail observations rather than recording errors, so they are not removed. Time in A&E is the exception, and it is treated below by replacing values beyond the IQR bounds with the median, which is itself a decision with consequences: it flattens the right tail and pulls the mean down. The limitation is noted in the README.
 
 ``` r
 # List of columns to check for outliers
@@ -537,7 +535,7 @@ sd(subset_df$AE_Time_Mins, na.rm = TRUE)
 Insights:
 
 Mean: The average time a patient spends in the A&E department is
-approximately 165.22 minutes. This gives us a general idea of how long a
+approximately 164.86 minutes. This gives us a general idea of how long a
 typical visit to A&E might last.
 
 Median: The median time spent in the A&E department is 140 minutes. This
@@ -555,7 +553,7 @@ Maximum: The longest time spent by a patient in the A&E department is
 cases where patients spend a very long time in the A&E department,
 perhaps due to severe conditions or complex treatment procedures.
 
-Standard Deviation: The standard deviation is approximately 139.98
+Standard Deviation: The standard deviation is approximately 139.04
 minutes. This relatively large standard deviation indicates a high level
 of variation in the time patients spend in the A&E department. This is
 likely due to the diverse nature of cases seen in the A&E department.
@@ -629,7 +627,7 @@ barplot(table(subset_df$Age_Band), main = "Bar Plot of Age Band", ylab = "Count"
 Insights:
 
 The age band with the highest number of A&E department visits is the
-“25-44” band, with 147,825 visits. This group includes individuals who
+“25-44” band, with 148,625 visits. This group includes individuals who
 are in their prime working years. The high number of visits could be
 related to work-related injuries, stress, or lifestyle factors that
 contribute to health issues requiring emergency care.

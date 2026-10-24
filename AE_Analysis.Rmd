@@ -187,7 +187,7 @@ print(unique_counts)
 
 ##Insights: By analyzing the results from the outlier detection function and the boxplots, you can identify columns with a large number of outliers that might require further cleaning or transformation. It also gives you a visual understanding of the distribution of data in each column, including the range of most values (the box) and potential outliers (the points outside the box).
 
-From the result of this analysis, it can be observed that there are no outliers in the columns experiment on for outliers. This entails that we can carry on with the analysis.
+The IQR test flags outliers in every column except IMD decile: 23,255 in time spent in A&E, 5,975 in number of diagnoses, 47,446 in investigations, 28,471 in treatments and 62,852 in provider to patient distance. In a dataset of this kind most of these are genuine long-tail observations rather than recording errors, so they are not removed. Time in A&E is the exception, and it is treated below by replacing values beyond the IQR bounds with the median, which is itself a decision with consequences: it flattens the right tail and pulls the mean down. The limitation is noted in the README.
 ```{r}
 # List of columns to check for outliers
 columns <- c("IMD_Decile_From_LSOA", "AE_Time_Mins", 
@@ -239,7 +239,7 @@ sd(subset_df$AE_Time_Mins, na.rm = TRUE)
 
 Insights:
 
-Mean: The average time a patient spends in the A&E department is approximately 165.22 minutes. This gives us a general idea of how long a typical visit to A&E might last.
+Mean: The average time a patient spends in the A&E department is approximately 164.86 minutes. This gives us a general idea of how long a typical visit to A&E might last.
 
 Median: The median time spent in the A&E department is 140 minutes. This means that half of the patients spend less than 140 minutes, and the other half spend more than this time. Since the mean is higher than the median, this indicates that there are some patients who spend a significantly longer time in the A&E department, pulling the average up.
 
@@ -247,7 +247,7 @@ Minimum: The shortest time spent by a patient in the A&E department is 0 minutes
 
 Maximum: The longest time spent by a patient in the A&E department is 1440 minutes or a full day (24 hours). This suggests that there are cases where patients spend a very long time in the A&E department, perhaps due to severe conditions or complex treatment procedures.
 
-Standard Deviation: The standard deviation is approximately 139.98 minutes. This relatively large standard deviation indicates a high level of variation in the time patients spend in the A&E department. This is likely due to the diverse nature of cases seen in the A&E department.
+Standard Deviation: The standard deviation is approximately 139.04 minutes. This relatively large standard deviation indicates a high level of variation in the time patients spend in the A&E department. This is likely due to the diverse nature of cases seen in the A&E department.
 
 
 ```{r}
@@ -302,7 +302,7 @@ barplot(table(subset_df$Age_Band), main = "Bar Plot of Age Band", ylab = "Count"
 
 Insights:
 
-The age band with the highest number of A&E department visits is the "25-44" band, with 147,825 visits. This group includes individuals who are in their prime working years. The high number of visits could be related to work-related injuries, stress, or lifestyle factors that contribute to health issues requiring emergency care.
+The age band with the highest number of A&E department visits is the "25-44" band, with 148,625 visits. This group includes individuals who are in their prime working years. The high number of visits could be related to work-related injuries, stress, or lifestyle factors that contribute to health issues requiring emergency care.
 
 The second most frequent group visiting the A&E department is the "1-17" band, with 126,741 visits. This suggests that young people, likely due to physical activities and injuries, also represent a significant proportion of emergency department visits.
 
@@ -424,10 +424,10 @@ subset_df$Month <- factor(month.name[subset_df$Month_Num], levels = month.name)
 
 # Add season column based on the month
 subset_df$Season <- case_when(
-  subset_df$Month %in% c("Dec", "Jan", "Feb") ~ "Winter",
-  subset_df$Month %in% c("Mar", "Apr", "May") ~ "Spring",
-  subset_df$Month %in% c("Jun", "Jul", "Aug") ~ "Summer",
-  subset_df$Month %in% c("Sep", "Oct", "Nov") ~ "Autumn",
+  subset_df$Month %in% c("December", "January", "February") ~ "Winter",
+  subset_df$Month %in% c("March", "April", "May")           ~ "Spring",
+  subset_df$Month %in% c("June", "July", "August")          ~ "Summer",
+  subset_df$Month %in% c("September", "October", "November") ~ "Autumn",
   TRUE                                        ~ NA_character_
 )
 
